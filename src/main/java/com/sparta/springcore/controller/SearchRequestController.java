@@ -1,18 +1,12 @@
-package com.sparta.week04.controller;
+package com.sparta.springcore.controller;
 
-import com.sparta.week04.models.ItemDto;
-import com.sparta.week04.utils.NaverShopSearch;
+import com.sparta.springcore.dto.ItemDto;
+import com.sparta.springcore.utils.NaverShopSearch;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.springframework.http.*;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor // final 로 선언된 클래스를 자동으로 생성합니다.

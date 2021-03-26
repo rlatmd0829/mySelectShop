@@ -1,9 +1,9 @@
-package com.sparta.week04.utils;
+package com.sparta.springcore.utils;
 
-import com.sparta.week04.models.ItemDto;
-import com.sparta.week04.models.Product;
-import com.sparta.week04.models.ProductRepository;
-import com.sparta.week04.service.ProductService;
+import com.sparta.springcore.dto.ItemDto;
+import com.sparta.springcore.model.Product;
+import com.sparta.springcore.repository.ProductRepository;
+import com.sparta.springcore.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

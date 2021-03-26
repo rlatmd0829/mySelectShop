@@ -1,7 +1,6 @@
-package com.sparta.week04.utils;
+package com.sparta.springcore.utils;
 
-import com.sparta.week04.models.ItemDto;
-import lombok.extern.apachecommons.CommonsLog;
+import com.sparta.springcore.dto.ItemDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.*;

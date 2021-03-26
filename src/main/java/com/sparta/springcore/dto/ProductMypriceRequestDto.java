@@ -1,4 +1,4 @@
-package com.sparta.week04.models;
+package com.sparta.springcore.dto;
 
 import lombok.Getter;
 
