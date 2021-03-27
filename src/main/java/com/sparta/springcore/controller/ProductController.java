@@ -2,31 +2,42 @@ package com.sparta.springcore.controller;
 
 import com.sparta.springcore.model.Product;
 import com.sparta.springcore.dto.ProductMypriceRequestDto;
-import com.sparta.springcore.repository.ProductRepository;
 import com.sparta.springcore.dto.ProductRequestDto;
 import com.sparta.springcore.security.UserDetailsImpl;
 import com.sparta.springcore.service.ProductService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequiredArgsConstructor // final로 선언된 멤버 변수를 자동으로 생성합니다.
 @RestController // JSON으로 데이터를 주고받음을 선언합니다.
 public class ProductController {
-
+    // 멤버 변수 선언
     private final ProductService productService;
-    private final ProductRepository productRepository;
+
+    // 생성자: ProductController() 가 생성될 때 호출됨
+    @Autowired
+    public ProductController(ProductService productService) {
+        // 멤버 변수 생성
+        this.productService = productService;
+    }
 
     // 로그인한 회원이 등록한 상품들 조회
     @GetMapping("/api/products")
-    public List<Product> getProducts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public Page<Product> getProducts(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("isAsc") boolean isAsc,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
         Long userId = userDetails.getUser().getId();
-        return productService.getProducts(userId);
+        page = page - 1; // UI에서는 1부터 시작하지만 서버에서는 0부터 시작하므로 받아온 값에 -1을 해준다.
+        return productService.getProducts(userId, page , size, sortBy, isAsc);
     }
-
 
     // 신규 상품 등록
     @PostMapping("/api/products")
@@ -39,15 +50,23 @@ public class ProductController {
         return product;
     }
 
+    // 설정 가격 변경
     @PutMapping("/api/products/{id}")
-    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto){
-        return productService.update(id, requestDto);
+    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto) {
+        Product product = productService.updateProduct(id, requestDto);
+        // 응답 보내기
+        return product.getId();
     }
 
     // (관리자용) 등록된 모든 상품 목록 조회
-    @Secured("ROLE_ADMIN") // 어드민 권한을 가진 사용자만 이 API를 사용할 수 있다.
+    @Secured("ROLE_ADMIN")
     @GetMapping("/api/admin/products")
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public Page<Product> getAllProducts(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("isAsc") boolean isAsc
+    ) {
+        return productService.getAllProducts(page , size, sortBy, isAsc);
     }
 }

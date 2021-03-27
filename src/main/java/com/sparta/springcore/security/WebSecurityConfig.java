@@ -38,12 +38,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/user/login")
-                .loginProcessingUrl("/user/login")
+                .loginProcessingUrl("/user/login") // Controller에 따로 만들지 않아도 login을 진행해준다. post인듯  get페이지는 controller에 작성되어있음
                 .defaultSuccessUrl("/")
                 .permitAll()
                 .and()
                 .logout()
-                .logoutUrl("/user/logout")
+                .logoutUrl("/user/logout") // Controller에 따로 만들지 않아도 로그아웃을 진행해준다. index html에서 로그아웃 버튼을 누를때 a태그 href로 /user/logout을 부르는걸 보니까 get방식인것 같다.
                 .permitAll()
                 .and()
                 .exceptionHandling()
