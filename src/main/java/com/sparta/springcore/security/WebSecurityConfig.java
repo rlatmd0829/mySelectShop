@@ -33,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
+
                 // 그 외 모든 요청은 인증과정 필요
                 .anyRequest().authenticated()
                 .and()
@@ -47,6 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .exceptionHandling()
+
                 .accessDeniedPage("/user/forbidden"); // 인가가 되지 않았을 경우 forbidden 페이지로 이동
+
     }
 }
